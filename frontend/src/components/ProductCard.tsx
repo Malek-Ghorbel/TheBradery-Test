@@ -10,13 +10,13 @@ export function ProductCard() {
             borderRadius='lg'
             />
             <Stack mt='6' spacing='3'>
-            <Heading size='md'>Living room Sofa</Heading>
-            <Text color='blue.600' fontSize='2xl'>
-                $450<Badge ml='1' colorScheme='green'>
-                in stock
-            </Badge>
-            </Text>
-            
+                <Heading size='md'>Living room Sofa</Heading>
+                <Text color='blue.600' fontSize='2xl'>
+                    $450
+                    <Badge ml='1' colorScheme='green'>
+                        in stock
+                    </Badge>
+                </Text>
             </Stack>
         </CardBody>
         <Divider />

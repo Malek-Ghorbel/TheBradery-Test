@@ -1,4 +1,5 @@
 import './App.css'
+import Navbar from './components/Navbar';
 import { ProductCard } from './components/ProductCard'
 
 function App() {
@@ -11,9 +12,13 @@ function App() {
   }
 
   return (
-    <div className="product-list">
-      {itemElements}
-    </div>
+    <>
+      <Navbar/>
+      <div className="container product-list">
+        
+        {itemElements}
+      </div>
+    </>
   );
 }
 
