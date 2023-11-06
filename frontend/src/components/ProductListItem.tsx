@@ -32,6 +32,7 @@ const ProductListItem: React.FC<ProductListItemProps> = ({ product, onDelete }) 
       <Spacer />
       <HStack spacing={2}>
       <IconButton 
+          size={'sm'}
           aria-label="Delete"
           icon={<DeleteIcon />}
           colorScheme="red"

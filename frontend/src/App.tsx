@@ -1,23 +1,34 @@
 import './App.css'
 import Navbar from './components/Navbar';
-import { ProductCard } from './components/ProductCard'
+import CheckoutPage from './pages/CheckoutPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProductPage from './pages/ProductPage';
 
 function App() {
-  const itemElements = [];
-
-  for (let i = 0; i < 22; i++) {
-    itemElements.push(
-      <ProductCard/>
-    );
-  }
+  const cartItems = [
+    {
+      id: 1,
+      title: 'Product 1',
+      price: 19.99,
+      imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+    },
+    {
+      id: 2,
+      title: 'Product 2',
+      price: 29.99,
+      imageUrl: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+    },
+  ];
 
   return (
     <>
       <Navbar/>
-      <div className="container product-list">
-        
-        {itemElements}
-      </div>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/"  Component={ProductPage} />
+        <Route path="/checkout" Component={() => <CheckoutPage cartItems={cartItems} />} />
+      </Routes>
+    </BrowserRouter>
     </>
   );
 }
