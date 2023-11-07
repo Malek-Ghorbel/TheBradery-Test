@@ -21,6 +21,7 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import {BsFillCartFill} from 'react-icons/bs';
 import {CgProfile} from 'react-icons/cg'
 import CartDrawer from './ShoppingCart';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,7 +59,9 @@ const Navbar = () => {
           </ListItem>
           <ListItem>
             <Button variant="ghost" w="100%">
-              Products
+              <a href='/'>              
+                Products
+              </a>
             </Button>
           </ListItem>
           <ListItem>
@@ -90,10 +93,14 @@ const Navbar = () => {
         ) : (
           <>
             <Button variant="ghost" colorScheme='blue' mr={2}>
-              Sign In
+              <a href='/login'>
+                Sign In
+              </a>
             </Button>
             <Button variant='solid' colorScheme='blue'>
-              Sign Up
+              <a href='/signup'>
+                Sign Up
+              </a>
             </Button>
           </>
         )}
