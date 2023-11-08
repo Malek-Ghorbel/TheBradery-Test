@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './product/product.module';
+import { ProductModule } from './products/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './product/entities/product.entity';
+import { Product } from './products/entities/product.entity';
+import { UsersModule } from './users/users.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -14,10 +16,12 @@ import { Product } from './product/entities/product.entity';
       username: 'root',
       password: 'mysql',
       database: 'mydb',
-      entities: [Product],
+      entities: [__dirname + '/../**/*.entity.js'] ,
       synchronize: false,
     }),
-    ProductModule
+    ProductModule,
+    UsersModule,
+    TransactionsModule
   ],
   controllers: [AppController],
   providers: [AppService],
