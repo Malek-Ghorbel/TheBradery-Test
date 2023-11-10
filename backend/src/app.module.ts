@@ -5,7 +5,8 @@ import { ProductModule } from './products/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './products/entities/product.entity';
 import { UsersModule } from './users/users.module';
-import { TransactionsModule } from './transactions/transactions.module';
+import { OrdersModule } from './orders/orders.module';
+import { ShoppingCartsModule } from './shopping-carts/shopping-carts.module';
 
 @Module({
   imports: [
@@ -17,11 +18,12 @@ import { TransactionsModule } from './transactions/transactions.module';
       password: 'mysql',
       database: 'mydb',
       entities: [__dirname + '/../**/*.entity.js'] ,
-      synchronize: false,
+      synchronize: true,
     }),
     ProductModule,
     UsersModule,
-    TransactionsModule
+    OrdersModule,
+    ShoppingCartsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,23 +1,24 @@
-import { Transaction } from "src/transactions/entities/transaction.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Orders } from "src/orders/entities/order.entity";
+import { ShoppingCart } from "src/shopping-carts/entities/shopping-cart.entity";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ length: 255 })
-    name: string;
+    @Column()
+    username: string;
 
-    @Column({ length: 255 })
+    @Column()
     email: string;
 
-    @Column({ length: 255 })
-    phone: string;
-
-    @Column({ length: 255 })
-    adress: string;
-
-    @Column({ length: 255 })
+    @Column()
     password: string;
+
+    @OneToOne(() => ShoppingCart, cart => cart.user)
+    shoppingCart: ShoppingCart; 
+
+    @OneToMany(() => Orders, order => order.user)
+    orders: Orders[];
 }
