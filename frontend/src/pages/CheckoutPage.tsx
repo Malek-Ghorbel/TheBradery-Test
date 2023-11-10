@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Box, Text, Button, VStack, HStack, Input, Heading, Container, Center, Image, Spacer, IconButton } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
-interface CheckoutPageProps {
-  cartItems: {
-    id: number;
-    title: string;
-    price: number;
-    imageUrl: string;
-  }[];
-}
+  interface CheckoutPageProps {
+    cartItems: {
+      id: number;
+      title: string;
+      price: number;
+      imageUrl: string;
+    }[];
+  }
 
 const CheckoutPage: React.FC<CheckoutPageProps> = ({ cartItems }) => {
   const [quantities, setQuantities] = useState<{ [itemId: number]: number }>({});

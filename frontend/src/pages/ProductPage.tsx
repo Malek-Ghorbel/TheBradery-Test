@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
-import { ProductCard } from "../components/ProductCard";
+import  ProductCard  from "../components/ProductCard";
 import { Center, Container, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Product } from "../models/Product";
+import { fetchProducts } from "../services/product-service";
 
 function ProductPage() {
-    const itemElements = [];
     const [isLoading, setIsLoading] = useState(true);
+    const [products, setProducts] = useState<Product[]>();
 
     useEffect(() => {
-        const loadingTimeout = setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-      
-        return () => {
-          clearTimeout(loadingTimeout);
+        const fetchData = async () => {
+        try {
+            const data = await fetchProducts();
+            setProducts(data);
+        } catch (error) {
+            console.error(error);
+        }
+        finally {
+            setIsLoading(false);
+        }
         };
-    }, []);
-      
 
-    for (let i = 0; i < 22; i++) {
-        itemElements.push(
-            <ProductCard/>
-        );
-    }
+        fetchData();
+    }, []);
 
     return (
         <div >
@@ -33,15 +34,18 @@ function ProductPage() {
                     emptyColor='gray.200'
                     color='blue.500'
                     size='xl'
+                    mt={'20'}
                     />
                 </Center>
-                
             ) : (
             
             <Container maxW={'container.xl'}>
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={5} mt={10}>
-                    {itemElements}
-
+                    {
+                        products?.map((product: Product) => 
+                            <ProductCard product={product} key={product.id}/>
+                        )
+                    }
                 </SimpleGrid>
             </Container>
             )}

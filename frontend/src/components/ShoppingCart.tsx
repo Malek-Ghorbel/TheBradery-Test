@@ -41,7 +41,8 @@ interface CartDrawerProps {
                         key={item.id}
                         product={item} onDelete={function (id: number): void {
                             console.log("delete" + id);
-                        } }                    
+                          } 
+                        }                    
                     />
                 ))
                 ) : (

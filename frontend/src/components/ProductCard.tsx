@@ -1,6 +1,10 @@
 import { Button, ButtonGroup, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center} from "@chakra-ui/react";
+import { Product } from "../models/Product";
 
-export function ProductCard() {
+interface ProductCartProps {
+    product: Product;
+}
+const ProductCard: React.FC<ProductCartProps> = ({product}) => {
     return(
         <Card flexShrink={0} maxW='sm' >
         <CardBody>
@@ -11,14 +15,23 @@ export function ProductCard() {
             />
             <Stack mt='6' spacing='3'>
                 <Center>
-                <Heading size='md'>Living room Sofa</Heading>
+                <Heading size='md'>{product.name}</Heading>
                 </Center>
                 <Center>
                 <Text color='blue.600' fontSize='2xl'>
-                    $450
-                    <Badge ml='1' colorScheme='green'>
-                        in stock
-                    </Badge>
+                    ${product.price}
+                    {
+                        (product.inventory > 0) 
+                        ?
+                        <Badge ml='1' colorScheme='green'>
+                            in stock
+                        </Badge> 
+                        :
+                        <Badge ml='1' colorScheme='red'>
+                            out of stock
+                        </Badge>
+                    }
+                    
                 </Text>
                 </Center>
             </Stack>
@@ -38,3 +51,5 @@ export function ProductCard() {
         </Card>
     )
 }
+
+export default ProductCard;
