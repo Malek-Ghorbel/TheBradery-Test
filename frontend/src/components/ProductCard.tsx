@@ -1,10 +1,17 @@
 import { Button, ButtonGroup, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center} from "@chakra-ui/react";
 import { Product } from "../models/Product";
+import { addToShoppingCart } from "../services/shopping-cart-service";
 
 interface ProductCartProps {
     product: Product;
 }
 const ProductCard: React.FC<ProductCartProps> = ({product}) => {
+    const addProductToCart = ()=> {
+        addToShoppingCart(1, product.id)
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    }
+
     return(
         <Card flexShrink={0} maxW='sm' >
         <CardBody>
@@ -42,7 +49,7 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
             <Button  size='sm' variant='solid' colorScheme='blue'>
                 Buy now
             </Button>
-            <Button size='sm' variant='ghost' colorScheme='blue'>
+            <Button size='sm' variant='ghost' colorScheme='blue' onClick={addProductToCart}>
                 Add to cart
             </Button>
             

@@ -21,25 +21,36 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import {BsFillCartFill} from 'react-icons/bs';
 import {CgProfile} from 'react-icons/cg'
 import CartDrawer from './ShoppingCart';
-import { Link } from 'react-router-dom';
+import Cart from '../models/ShoppinCart';
+import { getShoppingCart, removefromShoppingCart } from '../services/shopping-cart-service';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [user, setUser] = useState<any>(null); // User state, set to null when not signed in
   const [isCartOpen, setCartOpen] = useState(false);
+  const [cart, setCart] = useState<Cart>();
+
 
   const handleSignOut = () => {
-    // Implement your sign-out logic here
     setUser(null);
   };
 
   const handleOpenCart = () => {
+    getShoppingCart(1)
+      .then(data => setCart(data))
+      .catch(error => console.error(error));
     setCartOpen(true);
   };
 
   const handleCloseCart = () => {
     setCartOpen(false);
   };
+
+  const deleteItem = (id: number)=> {
+    removefromShoppingCart(1,id)
+    .then(data =>  setCart(data))
+    .catch(err => console.error(err))
+  } 
 
 
   return (
@@ -105,7 +116,7 @@ const Navbar = () => {
           </>
         )}
       </Flex>
-      <CartDrawer isOpen={isCartOpen} onClose={handleCloseCart} />
+      <CartDrawer isOpen={isCartOpen} onClose={handleCloseCart} cart={cart} onDeleteItem={deleteItem}/>
 
       {/* Display navigation items in the drawer for smaller screens */}
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>

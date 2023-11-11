@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ShoppingCart } from './entities/shopping-cart.entity';
@@ -15,20 +15,33 @@ export class ShoppingCartsService {
     @InjectRepository(ShoppingCart)
     private shoppingCartRepository: Repository<ShoppingCart>,
   ) {}
-
-  async addToCart(userId: number, productId: number): Promise<ShoppingCart> {
+  
+  async findCart(userId: number): Promise<ShoppingCart> {
+    // fetch the user
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
 
-    const product = await this.productRepository.findOne({ where: { id: productId } });
-    if (!product) throw new NotFoundException('Product not found');
-
+    // find the cart
     let shoppingCart = await this.shoppingCartRepository.findOne({ where: { user }, relations: ['products'] });
 
+    // if not found create a new empty one
     if (!shoppingCart) {
       shoppingCart = this.shoppingCartRepository.create({ user, products: [] });
     }
 
+    return shoppingCart
+  }
+
+  async addToCart(userId: number, productId: number): Promise<ShoppingCart> {
+    // fetch the product
+    const product = await this.productRepository.findOne({ where: { id: productId } });
+    if (!product) throw new NotFoundException('Product not found');
+    if (product.inventory == 0) throw new HttpException('product out of stock', 401)
+    
+    // get the cart
+    let shoppingCart = await this.findCart(userId);
+
+    // add the product and save
     shoppingCart.products.push(product);
     return this.shoppingCartRepository.save(shoppingCart);
   }
@@ -39,8 +52,9 @@ export class ShoppingCartsService {
 
     const shoppingCart = await this.shoppingCartRepository.findOne({ where: { user }, relations: ['products'] });
     if (!shoppingCart) throw new NotFoundException('Shopping cart not found');
-
-    shoppingCart.products = shoppingCart.products.filter(product => product.id !== productId);
+    shoppingCart.products.forEach((item, index) => {
+      if (item.id == productId) shoppingCart.products.splice(index,1);
+    });
     return this.shoppingCartRepository.save(shoppingCart);
   }
 }
