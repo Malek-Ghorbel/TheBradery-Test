@@ -28,7 +28,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/"  Component={ProductPage} />
-        <Route path="/checkout" Component={() => <CheckoutPage cartItems={cartItems} />} />
+        <Route path="/checkout" Component={CheckoutPage} />
         <Route path="/login"  Component={Login} />
         <Route path="/signup"  Component={Signup} />
       </Routes>

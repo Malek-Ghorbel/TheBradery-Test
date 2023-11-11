@@ -21,7 +21,7 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import {BsFillCartFill} from 'react-icons/bs';
 import {CgProfile} from 'react-icons/cg'
 import CartDrawer from './ShoppingCart';
-import Cart from '../models/ShoppinCart';
+import Cart from '../models/Cart';
 import { getShoppingCart, removefromShoppingCart } from '../services/shopping-cart-service';
 
 const Navbar = () => {

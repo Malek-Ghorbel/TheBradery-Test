@@ -47,11 +47,15 @@ export class ShoppingCartsService {
   }
 
   async removeFromCart(userId: number, productId: number): Promise<ShoppingCart> {
+    // fetch the user
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
 
+    // find the cart
     const shoppingCart = await this.shoppingCartRepository.findOne({ where: { user }, relations: ['products'] });
     if (!shoppingCart) throw new NotFoundException('Shopping cart not found');
+
+    // remove the element
     shoppingCart.products.forEach((item, index) => {
       if (item.id == productId) shoppingCart.products.splice(index,1);
     });

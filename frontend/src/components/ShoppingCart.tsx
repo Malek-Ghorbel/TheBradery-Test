@@ -10,10 +10,8 @@ import {
     VStack,
     Text,
   } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
 import ProductListItem from './ProductListItem';
-import Cart from '../models/ShoppinCart';
-import { removefromShoppingCart } from '../services/shopping-cart-service';
+import Cart from '../models/Cart';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -33,17 +31,16 @@ const ShoppingCart: React.FC<CartDrawerProps> = ({ isOpen, onClose, cart, onDele
 
         <DrawerBody>
           <VStack spacing={1}>
-              {cart ? (
+            {cart ? (
               cart?.products.map((item) => (
-                  <ProductListItem
-                      key={item.id}
-                      product={item} onDelete={onDeleteItem}                    
-                  />
+                <ProductListItem
+                    key={item.id}
+                    product={item} onDelete={onDeleteItem}                    
+                />
               ))
-              ) : (
+            ) : (
               <Text>Your cart is empty.</Text>
-              )}
-              
+            )}
           </VStack>
         </DrawerBody>
 
@@ -51,7 +48,9 @@ const ShoppingCart: React.FC<CartDrawerProps> = ({ isOpen, onClose, cart, onDele
           <Button variant='outline' mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button colorScheme='blue'>Checkout</Button>
+          <Button colorScheme='blue'>
+            <a href='/checkout'>Checkout</a>
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
