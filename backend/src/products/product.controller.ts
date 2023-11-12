@@ -18,11 +18,6 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @Get('/details/:id')
-  findOneProduct(@Param('id') id: number) {
-    return this.productService.findOne(id);
-  }
-
   @Patch('/update/:id')
   updateProduct(@Param('id') id: number, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(id, updateProductDto);

@@ -14,6 +14,7 @@ function CheckoutPage()  {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>();
 
+  // fetch the users shopping cart first
   useEffect(() => {
     getShoppingCart(1)
     .then(data => setProducts(data.products))
@@ -23,6 +24,7 @@ function CheckoutPage()  {
 
   const [quantities, setQuantities] = useState<{ [itemId: number]: number }>({});
 
+  // handle the products' quantities increase and decrease using +/- buttons
   const handleIncrement = (itemId: number) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -40,6 +42,12 @@ function CheckoutPage()  {
     }
   };
 
+  // disable the + button if quantity reach the maximum inventory
+  const disablePlusButton = (itemId : number)=>{
+    return (quantities[itemId] === products?.find((e) => e.id == itemId)?.inventory )
+  }
+
+  // for calculating the total price of the order
   const calculateTotalPrice = () => {
     let total = 0;
     for (const item of products || []) {
@@ -65,7 +73,7 @@ function CheckoutPage()  {
       items :  orderItems
     };
     
-    // send the request
+    // send the request and navigate to home
     createOrder(order)
     .then(data => {console.log(data) ; setProducts([]); navigate('/') })
     .catch(err => console.error(err));
@@ -73,7 +81,7 @@ function CheckoutPage()  {
 
   return (
     <div >
-      {isLoading ? (
+      {isLoading ? ( // loading status
         <Center>
             <Spinner
             thickness='4px'
@@ -90,6 +98,8 @@ function CheckoutPage()  {
           <Heading as="h2" size="lg" mb={10} mt={10}>
             Checkout
           </Heading>
+
+          {/*list of products with quantities selector*/}
           <VStack spacing={4} align="start" >
             {products?.map((item) => (
             <HStack
@@ -102,6 +112,7 @@ function CheckoutPage()  {
               boxShadow="md"
               width={'100%'}
             >
+              {/*left side for image, name and price*/}
               <Image src={image} alt={item.name} w="100px" h="80px" />
               <VStack spacing={1} align="start">
                 <Heading size='md'>{item.name}</Heading>
@@ -110,6 +121,7 @@ function CheckoutPage()  {
                 </Text>
               </VStack>
               <Spacer/>
+              {/*right side for quantities selection and delete button*/}
               <HStack>
                 <Button size="sm" onClick={() => handleDecrement(item.id)} colorScheme="blue">
                   -
@@ -123,7 +135,7 @@ function CheckoutPage()  {
                   isReadOnly
                   w="50px"
                 />
-                <Button size="sm" onClick={() => handleIncrement(item.id)} colorScheme="blue" isDisabled={quantities[item.id] === products.find((e) => e.id == item.id)?.inventory }>
+                <Button size="sm" onClick={() => handleIncrement(item.id)} colorScheme="blue" isDisabled={disablePlusButton(item.id)}>
                   +
                 </Button>
               </HStack>
@@ -137,9 +149,11 @@ function CheckoutPage()  {
             </HStack>
             ))}
           </VStack>
+
           <Text fontSize="lg" mt={4}>
-              Total Price: ${calculateTotalPrice()}
+              Total Price: ${calculateTotalPrice().toFixed(2)}
           </Text>
+          
           <Center>
               <Button colorScheme="blue" onClick={handleConfirm} mt={4}>
                   Confirm

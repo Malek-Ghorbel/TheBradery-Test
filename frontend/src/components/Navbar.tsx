@@ -35,6 +35,7 @@ const Navbar = () => {
     setUser(null);
   };
 
+  // fetch the cart items from backend when opening the drawer
   const handleOpenCart = () => {
     getShoppingCart(1)
       .then(data => setCart(data))
@@ -46,12 +47,12 @@ const Navbar = () => {
     setCartOpen(false);
   };
 
+  // define the delete item from cart function and pass it to the drawer
   const deleteItem = (id: number)=> {
     removefromShoppingCart(1,id)
     .then(data =>  setCart(data))
     .catch(err => console.error(err))
   } 
-
 
   return (
     <Box boxShadow="lg" bg="white" p={4}>

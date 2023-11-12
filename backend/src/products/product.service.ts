@@ -21,12 +21,6 @@ export class ProductService {
     return this.productRepository.save(createProductDto);
   }
 
-  findOne(id: number) : Promise<Product> {
-    console.log(id);
-    
-    return this.productRepository.findOneByOrFail({id});
-  }
-
   async update(id: number, updateProductDto: UpdateProductDto) {
     // look for the product
     const product = await this.productRepository.findOne({where:{id}});

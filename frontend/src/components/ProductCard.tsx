@@ -1,4 +1,4 @@
-import { Button, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center, useToast} from "@chakra-ui/react";
+import { Button, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center, useToast, Flex} from "@chakra-ui/react";
 import { Product } from "../models/Product";
 import { addToShoppingCart } from "../services/shopping-cart-service";
 
@@ -6,6 +6,7 @@ interface ProductCartProps {
     product: Product;
 }
 const ProductCard: React.FC<ProductCartProps> = ({product}) => {
+    // toast for displaying messages
     const toast = useToast()
 
     const addProductToCart = ()=> {
@@ -58,11 +59,9 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
         </CardBody>
         <Divider />
         <CardFooter >
-            <Center>
-                <Button size='sm' variant='solid' colorScheme='blue' onClick={addProductToCart} ml={"20"}>
-                    Add to cart
-                </Button>
-            </Center>
+            <Button size='sm' variant='solid' colorScheme='blue' onClick={addProductToCart} ml={"20"}>
+                Add to cart
+            </Button>
         </CardFooter>   
         </Card>
     )

@@ -18,6 +18,7 @@ interface ProductListItemProps {
 }
 
 const ProductListItem: React.FC<ProductListItemProps> = ({ product, onDelete }) => {
+  // receive a product as props and display it as a list item
   return (
     <Box borderWidth="1px" borderRadius="md" p={2} m={2} display="flex" width="100%">
       <Image src={`${image}`} alt={product.name} w="50px" h="50px" />

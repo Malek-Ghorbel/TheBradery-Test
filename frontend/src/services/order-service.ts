@@ -1,6 +1,7 @@
 import { BACKEND_URL } from "../config/config";
 import { CreateOrderDto } from "../models/order-dto";
 
+// request for making an order
 export const createOrder = async (body: CreateOrderDto) => {
     const response = await fetch(`${BACKEND_URL}/orders/create` , {
         method: 'POST' , 

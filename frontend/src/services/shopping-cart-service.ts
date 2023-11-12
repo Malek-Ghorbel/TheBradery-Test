@@ -1,5 +1,6 @@
 import { BACKEND_URL } from "../config/config";
 
+// Backend calls for shopping cart operations
 export const getShoppingCart = async (userId:number) => {
   const response = await fetch(`${BACKEND_URL}/shopping-cart/${userId}`);
 

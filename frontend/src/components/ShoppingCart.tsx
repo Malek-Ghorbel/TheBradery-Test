@@ -31,7 +31,7 @@ const ShoppingCart: React.FC<CartDrawerProps> = ({ isOpen, onClose, cart, onDele
 
         <DrawerBody>
           <VStack spacing={1}>
-            {cart ? (
+            {cart ? ( // check if the shopping cart has items
               cart?.products.map((item) => (
                 <ProductListItem
                     key={item.id}
