@@ -4,7 +4,6 @@ export class OrderItemDto {
 }
 
 export class CreateOrderDto {
-    total: number | undefined
-    userId: number | undefined;
+    total: number | undefined;
     items: OrderItemDto[] | undefined;
 }

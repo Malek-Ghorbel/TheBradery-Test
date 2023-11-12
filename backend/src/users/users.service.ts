@@ -16,19 +16,11 @@ export class UsersService {
     return this.userRepository.save(createUserDto);
   }
 
-  findAll() : Promise<User[]> {
-    return this.userRepository.find();
-  }
-
   findOne(id: number) : Promise<User> {
     return this.userRepository.findOne({where:{id}});
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update( id , updateUserDto );
-  }
-
-  remove(id: number) {
-    return this.userRepository.delete({id}) ;
+  findbyEmail(email: string) : Promise<User> {
+    return this.userRepository.findOne({where:{email : email}});
   }
 }

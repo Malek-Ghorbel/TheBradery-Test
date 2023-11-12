@@ -24,13 +24,13 @@ export class OrdersService {
     return this.orderRepository.find();
   }
 
-  async createOrder(dto: CreateOrderDto): Promise<Orders> {
+  async createOrder(dto: CreateOrderDto, userId: number): Promise<Orders> {
     // Executing all the operations as a single transaction for race condition and concurrency handling
     return await this.dataSource.transaction(async transactionalEntityManager => {
       // Fetch the user
-      const user = await transactionalEntityManager.findOne(User, { where: { id: dto.userId } });
+      const user = await transactionalEntityManager.findOne(User, { where: { id: userId } });
       if (!user) {
-        throw new NotFoundException(`User with ID ${dto.userId} not found`);
+        throw new NotFoundException(`User with ID ${userId} not found`);
       }
 
       // Create and immediately save the order

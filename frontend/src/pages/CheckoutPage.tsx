@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Box, Text, Button, VStack, HStack, Input, Heading, Container, Center, Image, Spacer, IconButton, Spinner } from '@chakra-ui/react';
+import { Box, Text, Button, VStack, HStack, Input, Heading, Container, Center, Image, Spacer, IconButton, Spinner, useToast } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Product } from '../models/Product';
 import { getShoppingCart } from '../services/shopping-cart-service';
 import image from '../assets/a.jpg';
 import { createOrder } from '../services/order-service';
-import { CreateOrderDto, OrderItemDto } from '../models/order-dto';
+import { CreateOrderDto, OrderItemDto } from '../dto/order.dto';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -13,12 +13,20 @@ function CheckoutPage()  {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>();
+  // toast for displaying messages
+  const toast = useToast()
 
   // fetch the users shopping cart first
   useEffect(() => {
-    getShoppingCart(1)
+    getShoppingCart()
     .then(data => setProducts(data.products))
-    .catch(error => console.error(error))
+    .catch(error => toast({
+      title: 'cannot fetch products',
+      description: error.message,
+      status: 'error',
+      duration: 3000,
+      isClosable: true,
+    }))
     .finally(() => setIsLoading(false))
   }, []);
 
@@ -57,26 +65,43 @@ function CheckoutPage()  {
     return total;
   };
 
+  // confirm the order
   const handleConfirm = () => {
     // make the items in the dto format
     const orderItems: OrderItemDto[] = [];
     Object.keys(quantities).forEach(key => {
       const itemId = Number(key); // Convert key back to number
       const value = quantities[itemId];
-      orderItems.push({productId : itemId ,quantity: value})
+      if (value > 0)
+        orderItems.push({productId : itemId ,quantity: value})
     });
 
     // create the order
     const order : CreateOrderDto = {
-      userId: 1 ,
       total : calculateTotalPrice(),
       items :  orderItems
     };
     
     // send the request and navigate to home
     createOrder(order)
-    .then(data => {console.log(data) ; setProducts([]); navigate('/') })
-    .catch(err => console.error(err));
+    .then(() => {
+      toast({
+        title: 'Order passed',
+        description: "Thank you. Your order is confirmed.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      }); 
+      setProducts([]); 
+      navigate('/') 
+    })
+    .catch(error => toast({
+      title: 'cannot pass order',
+      description: error.message,
+      status: 'error',
+      duration: 3000,
+      isClosable: true,
+    }))
   };
 
   return (

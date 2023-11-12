@@ -16,6 +16,7 @@ import {
   ListItem,
   Button,
   Icon,
+  useToast,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import {BsFillCartFill} from 'react-icons/bs';
@@ -26,20 +27,32 @@ import { getShoppingCart, removefromShoppingCart } from '../services/shopping-ca
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [user, setUser] = useState<any>(null); // User state, set to null when not signed in
   const [isCartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState<Cart>();
+  // toast for displaying error messages
+  const toast = useToast();
 
+  const isUserLoggedIn = () => {
+    const token = localStorage.getItem('token');
+    return !!token; // returns true if token is present, false otherwise
+  };
 
   const handleSignOut = () => {
-    setUser(null);
+    localStorage.removeItem('token');
+    window.location.reload();
   };
 
   // fetch the cart items from backend when opening the drawer
   const handleOpenCart = () => {
-    getShoppingCart(1)
+    getShoppingCart()
       .then(data => setCart(data))
-      .catch(error => console.error(error));
+      .catch(() => toast({
+        title: 'cannot display cart',
+        description: 'you must be signed in',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+    }))
     setCartOpen(true);
   };
 
@@ -49,9 +62,15 @@ const Navbar = () => {
 
   // define the delete item from cart function and pass it to the drawer
   const deleteItem = (id: number)=> {
-    removefromShoppingCart(1,id)
+    removefromShoppingCart(id)
     .then(data =>  setCart(data))
-    .catch(err => console.error(err))
+    .catch(error => toast({
+      title: 'cannot delete froom cart',
+      description: error.message,
+      status: 'error',
+      duration: 3000,
+      isClosable: true,
+    }))
   } 
 
   return (
@@ -66,7 +85,9 @@ const Navbar = () => {
         <List display={{ base: 'none', md: 'flex' }}>
           <ListItem>
             <Button variant="ghost" w="100%">
-              Home
+              <a href='/'> 
+                Home
+              </a>
             </Button>
           </ListItem>
           <ListItem>
@@ -93,7 +114,7 @@ const Navbar = () => {
           <Icon boxSize={5} as={BsFillCartFill}/>
         </Button>
         
-        {user ? ( // Check if user is signed in
+        {isUserLoggedIn() ? ( // Check if user is signed in
           <>
             <Button variant="ghost" mr={2}>
               <Icon boxSize={5} as={CgProfile}/>

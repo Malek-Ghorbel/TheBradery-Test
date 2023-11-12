@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
 import  ProductCard  from "../components/ProductCard";
-import { Center, Container, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Center, Container, Heading, SimpleGrid, Spinner, useToast } from "@chakra-ui/react";
 import { Product } from "../models/Product";
 import { fetchProducts } from "../services/product-service";
 
 function ProductPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState<Product[]>();
+    // toast for displaying messages
+    const toast = useToast();
 
     useEffect(() => {
-        const fetchData = async () => {
-        try {
-            const data = await fetchProducts();
-            setProducts(data);
-        } catch (error) {
-            console.error(error);
-        }
-        finally {
-            setIsLoading(false);
-        }
-        };
-
-        fetchData();
+        fetchProducts()
+        .then(data => setProducts(data))
+        .catch(error => toast({
+          title: 'cannot fetch products',
+          description: error.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        }))
+        .finally(() => setIsLoading(false))
     }, []);
 
     return (

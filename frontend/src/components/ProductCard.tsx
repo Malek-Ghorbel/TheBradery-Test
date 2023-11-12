@@ -1,6 +1,7 @@
-import { Button, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center, useToast, Flex} from "@chakra-ui/react";
+import { Button, CardBody, CardFooter, Divider, Heading, Stack ,Text,Image,Card, Badge, Center, useToast} from "@chakra-ui/react";
 import { Product } from "../models/Product";
 import { addToShoppingCart } from "../services/shopping-cart-service";
+import image from '../assets/a.jpg';
 
 interface ProductCartProps {
     product: Product;
@@ -10,28 +11,28 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
     const toast = useToast()
 
     const addProductToCart = ()=> {
-        addToShoppingCart(1, product.id)
-            .then(data => toast({
+        addToShoppingCart(product.id)
+            .then(() => toast({
                 title: 'Product added',
                 description: "We've added the product to your cart.",
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
-              }))
-            .catch(error => toast({
+            }))
+            .catch(() => toast({
                 title: 'cannot add product',
-                description: error.message,
+                description: 'you must be signed in',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-              }))
+            }))
     }
 
     return(
         <Card flexShrink={0} maxW='sm' >
         <CardBody>
             <Image
-            src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+            src={image}
             alt={product.name}
             borderRadius='lg'
             />
@@ -59,7 +60,14 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
         </CardBody>
         <Divider />
         <CardFooter >
-            <Button size='sm' variant='solid' colorScheme='blue' onClick={addProductToCart} ml={"20"}>
+            <Button 
+                size='sm' 
+                variant='solid' 
+                colorScheme='blue' 
+                onClick={addProductToCart} 
+                ml={"20"}
+                isDisabled={product.inventory === 0}
+            >
                 Add to cart
             </Button>
         </CardFooter>   

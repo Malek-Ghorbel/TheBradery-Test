@@ -1,0 +1,24 @@
+# Specify the base image
+FROM node:18 as build
+
+# Create and change to the app directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Serve the app using a lightweight node server like serve
+FROM node:18
+RUN npm install -g serve
+COPY --from=build /usr/src/app/dist /usr/src/app/dist
+EXPOSE 5173
+CMD ["serve", "-s", "/usr/src/app/dist", "-l", "5173"]

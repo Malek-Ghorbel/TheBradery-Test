@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   Heading,
@@ -11,11 +10,39 @@ import {
   CardBody,
   CardHeader,
   Center,
+  useToast,
 } from '@chakra-ui/react';
 import backgroundImage from '../assets/a.jpg';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/auth-service';
 
 
 const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const navigate = useNavigate();
+  // toast for displaying error messages
+  const toast = useToast();
+
+  const handleSubmit = async (event:any) => {
+      event.preventDefault();
+      registerUser(email, password, fullName)
+      .then((data) => {
+          localStorage.setItem('token', data.token); // Save the token
+          navigate('/');// Navigate to the home page
+          window.location.reload();
+      } )
+      .catch((error) => toast({
+          title: 'Error',
+          description: error.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+      }))
+  };
+
   const pageStyle = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',
@@ -40,33 +67,27 @@ const Signup = () => {
             </Heading>
         </CardHeader>
         <CardBody>
-        <FormControl id="email" isRequired mb={3}>
-          <FormLabel>Email address</FormLabel>
-          <Input type="email" />
-        </FormControl>
-        <FormControl id="name" isRequired mb={3}>
-          <FormLabel>Full name</FormLabel>
-          <Input type="text" />
-        </FormControl>
-        <FormControl id="phone" isRequired mb={3}>
-          <FormLabel>Phone</FormLabel>
-          <Input type="text" />
-        </FormControl>
-        <FormControl id="adress" isRequired mb={3}>
-          <FormLabel>Adress</FormLabel>
-          <Input type="text" />
-        </FormControl>
-        <FormControl id="password" isRequired mb={3}>
-          <FormLabel>Password</FormLabel>
-          <Input type="password" />
-        </FormControl>
-        <FormControl id="confirmPassword" isRequired >
-          <FormLabel>Confirm Password</FormLabel>
-          <Input type="password" />
-        </FormControl>
-        <Button colorScheme="blue" size="md" mt={6}>
-          Signup
-        </Button>
+        <form onSubmit={handleSubmit}>
+          <FormControl id="email" isRequired mb={3}>
+            <FormLabel>Email address</FormLabel>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          </FormControl>
+          <FormControl id="name" isRequired mb={3}>
+            <FormLabel>Full name</FormLabel>
+            <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)}/>
+          </FormControl>
+          <FormControl id="password" isRequired mb={3}>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          </FormControl>
+          <FormControl id="confirmPassword" isRequired >
+            <FormLabel>Confirm Password</FormLabel>
+            <Input type="password" />
+          </FormControl>
+          <Button colorScheme="blue" type="submit" size="md" mt={6}>
+            Signup
+          </Button>
+        </form>
         <Text mt={4}>Already have an account? <a href="/login">Login</a></Text>
       </CardBody> 
     </Card>

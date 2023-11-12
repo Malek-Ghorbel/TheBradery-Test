@@ -5,6 +5,5 @@ export class OrderItemDto {
 
 export class CreateOrderDto {
     total: number
-    userId: number;
     items: OrderItemDto[];
 }

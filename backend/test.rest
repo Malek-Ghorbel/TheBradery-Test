@@ -1,0 +1,29 @@
+@host = http://localhost:5000
+@contentType = application/json
+
+###
+# Register a new user
+POST {{host}}/auth/register
+Content-Type: {{contentType}}
+
+{
+    "fullName": "John Doe",
+    "email": "johndoea@example.com",
+    "password": "password123"
+}
+
+###
+# Log in
+POST {{host}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "johndoe@example.com",
+    "password": "password123"
+}
+
+###
+# Access a protected route (use the token from the login response)
+# Replace `your_token_here` with the actual token received after login
+GET {{host}}/shopping-cart/add/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJzdWIiOjEsImlhdCI6MTY5OTgxOTg4MCwiZXhwIjoxNzAwNjgzODgwfQ.gR6RP22-xguHe79uLqQEEXwv3LS1BLQVPUXvMmyemyY
