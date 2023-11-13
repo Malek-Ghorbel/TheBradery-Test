@@ -63,32 +63,32 @@ const Signup = () => {
       <Card minW={'lg'} >
         <CardHeader>
             <Heading as="h2" size="xl" mb={2} >
-                <Center>Signup</Center>
+                <Center>S'inscrire</Center>
             </Heading>
         </CardHeader>
         <CardBody>
         <form onSubmit={handleSubmit}>
           <FormControl id="email" isRequired mb={3}>
-            <FormLabel>Email address</FormLabel>
+            <FormLabel>Email</FormLabel>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
           </FormControl>
           <FormControl id="name" isRequired mb={3}>
-            <FormLabel>Full name</FormLabel>
+            <FormLabel>Nom complet</FormLabel>
             <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)}/>
           </FormControl>
           <FormControl id="password" isRequired mb={3}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>Mot de passe</FormLabel>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
           </FormControl>
           <FormControl id="confirmPassword" isRequired >
-            <FormLabel>Confirm Password</FormLabel>
+            <FormLabel>Confirmer le mot de passe</FormLabel>
             <Input type="password" />
           </FormControl>
           <Button colorScheme="blue" type="submit" size="md" mt={6}>
-            Signup
+            S'inscrire
           </Button>
         </form>
-        <Text mt={4}>Already have an account? <a href="/login">Login</a></Text>
+        <Text mt={4}>Vous avez deja un compte? <a href="/login">Se connecter</a></Text>
       </CardBody> 
     </Card>
   </Box>

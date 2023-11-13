@@ -18,7 +18,6 @@ This repository contains the code for the technical test of The bradery: a full-
 
 - Docker
 - Docker Compose
-- Node.js (for local development)
 
 ### Installation
 

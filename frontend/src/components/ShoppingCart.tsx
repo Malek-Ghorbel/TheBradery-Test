@@ -27,7 +27,7 @@ const ShoppingCart: React.FC<CartDrawerProps> = ({ isOpen, onClose, cart, onDele
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Your Cart</DrawerHeader>
+        <DrawerHeader>Votre panier</DrawerHeader>
 
         <DrawerBody>
           <VStack spacing={1}>
@@ -39,17 +39,17 @@ const ShoppingCart: React.FC<CartDrawerProps> = ({ isOpen, onClose, cart, onDele
                 />
               ))
             ) : (
-              <Text>Your cart is empty.</Text>
+              <Text>Votre panier est vide.</Text>
             )}
           </VStack>
         </DrawerBody>
 
         <DrawerFooter>
           <Button variant='outline' mr={3} onClick={onClose}>
-            Cancel
+            Annuler
           </Button>
           <Button colorScheme='blue'>
-            <a href='/checkout'>Checkout</a>
+            <a href='/checkout'>Commande</a>
           </Button>
         </DrawerFooter>
       </DrawerContent>

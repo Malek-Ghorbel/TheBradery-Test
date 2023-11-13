@@ -40,7 +40,7 @@ function ProductPage() {
             
             <Container maxW={'container.xl'} mb={10} >
                 <Heading as="h2" size="lg" mb={10} mt={10}>
-                    Our Products
+                    Nos produits
                 </Heading>
                 <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={5} mt={10}>
                     {

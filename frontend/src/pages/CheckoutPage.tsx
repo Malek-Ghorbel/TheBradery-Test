@@ -21,7 +21,7 @@ function CheckoutPage()  {
     getShoppingCart()
     .then(data => setProducts(data.products))
     .catch(error => toast({
-      title: 'cannot fetch products',
+      title: 'On ne peut pas recevoir votre panier',
       description: error.message,
       status: 'error',
       duration: 3000,
@@ -86,8 +86,8 @@ function CheckoutPage()  {
     createOrder(order)
     .then(() => {
       toast({
-        title: 'Order passed',
-        description: "Thank you. Your order is confirmed.",
+        title: 'Commande confirmé',
+        description: "Merci. Votre commande est bien confirmé.",
         status: 'success',
         duration: 3000,
         isClosable: true,
@@ -96,7 +96,7 @@ function CheckoutPage()  {
       navigate('/') 
     })
     .catch(error => toast({
-      title: 'cannot pass order',
+      title: 'Erreur',
       description: error.message,
       status: 'error',
       duration: 3000,
@@ -121,7 +121,7 @@ function CheckoutPage()  {
       <Container maxW='container.lg'>
         <Box p={4} >
           <Heading as="h2" size="lg" mb={10} mt={10}>
-            Checkout
+            Commande
           </Heading>
 
           {/*list of products with quantities selector*/}
@@ -142,7 +142,7 @@ function CheckoutPage()  {
               <VStack spacing={1} align="start">
                 <Heading size='md'>{item.name}</Heading>
                 <Text fontSize="md" color="gray.600">
-                    Price: ${item.price.toFixed(2)}
+                    Prix: ${item.price.toFixed(2)}
                 </Text>
               </VStack>
               <Spacer/>
@@ -176,12 +176,12 @@ function CheckoutPage()  {
           </VStack>
 
           <Text fontSize="lg" mt={4}>
-              Total Price: ${calculateTotalPrice().toFixed(2)}
+              Total: ${calculateTotalPrice().toFixed(2)}
           </Text>
           
           <Center>
               <Button colorScheme="blue" onClick={handleConfirm} mt={4}>
-                  Confirm
+                  Confirmer
               </Button>
           </Center>
         </Box>

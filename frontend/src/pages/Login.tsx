@@ -62,25 +62,25 @@ const Login = () => {
             <Card minW={'md'} >
                 <CardHeader>
                     <Heading as="h2" size="xl" mb={6} >
-                        <Center>Login</Center>
+                        <Center>Se connecter</Center>
                     </Heading>
                 </CardHeader>
 
                 <CardBody>
                     <form onSubmit={handleSubmit}>
                         <FormControl id="email" isRequired>
-                            <FormLabel>Email address</FormLabel>
+                            <FormLabel>Email</FormLabel>
                             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         </FormControl>
                         <FormControl id="password" isRequired mt={4}>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>Mot de passe</FormLabel>
                             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </FormControl>
                         <Button colorScheme="blue" type='submit' size="lg" mt={6}>
-                            Login
+                            Se connecter
                         </Button>
                     </form>
-                    <Text mt={4}>Don't have an account? <a href="/signup">Sign up</a></Text>
+                    <Text mt={4}>Vous n'acez pas de compte? <a href="/signup">S'inscrire</a></Text>
                 </CardBody> 
             </Card>
         </Box>

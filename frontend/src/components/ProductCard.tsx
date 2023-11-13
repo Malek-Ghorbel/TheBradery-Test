@@ -13,15 +13,15 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
     const addProductToCart = ()=> {
         addToShoppingCart(product.id)
             .then(() => toast({
-                title: 'Product added',
-                description: "We've added the product to your cart.",
+                title: 'Produit ajouté',
+                description: "On a ajouté le produit a votre panier.",
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
             }))
             .catch(() => toast({
-                title: 'cannot add product',
-                description: 'you must be signed in',
+                title: 'Erreur',
+                description: 'vous devez etre connecté',
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
@@ -42,16 +42,16 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
                 </Center>
                 <Center>
                     <Text color='blue.600' fontSize='2xl'>
-                        ${product.price}
+                        €{product.price}
                         {
                             (product.inventory > 0) 
                             ?
                             <Badge ml='1' colorScheme='green'>
-                                in stock
+                                En stock
                             </Badge> 
                             :
                             <Badge ml='1' colorScheme='red'>
-                                out of stock
+                                Epuisé
                             </Badge>
                         }
                     </Text>
@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCartProps> = ({product}) => {
                 ml={"20"}
                 isDisabled={product.inventory === 0}
             >
-                Add to cart
+                Ajouter au panier
             </Button>
         </CardFooter>   
         </Card>

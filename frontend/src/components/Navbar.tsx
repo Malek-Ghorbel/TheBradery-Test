@@ -47,8 +47,8 @@ const Navbar = () => {
     getShoppingCart()
       .then(data => setCart(data))
       .catch(() => toast({
-        title: 'cannot display cart',
-        description: 'you must be signed in',
+        title: 'Erreur',
+        description: 'vous devez etre connecté',
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -65,7 +65,7 @@ const Navbar = () => {
     removefromShoppingCart(id)
     .then(data =>  setCart(data))
     .catch(error => toast({
-      title: 'cannot delete froom cart',
+      title: 'on ne peut pas supprimer',
       description: error.message,
       status: 'error',
       duration: 3000,
@@ -86,20 +86,20 @@ const Navbar = () => {
           <ListItem>
             <Button variant="ghost" w="100%">
               <a href='/'> 
-                Home
+                Acceuil
               </a>
             </Button>
           </ListItem>
           <ListItem>
             <Button variant="ghost" w="100%">
               <a href='/'>              
-                Products
+                Produits
               </a>
             </Button>
           </ListItem>
           <ListItem>
             <Button variant="ghost" w="100%">
-              About
+              A propos
             </Button>
           </ListItem>
           <ListItem>
@@ -120,19 +120,19 @@ const Navbar = () => {
               <Icon boxSize={5} as={CgProfile}/>
             </Button>
             <Button variant="ghost" onClick={handleSignOut}>
-              Sign Out
+              Se deconnecter
             </Button>
           </>
         ) : (
           <>
             <Button variant="ghost" colorScheme='blue' mr={2}>
               <a href='/login'>
-                Sign In
+                Se connecter
               </a>
             </Button>
             <Button variant='solid' colorScheme='blue'>
               <a href='/signup'>
-                Sign Up
+                S'inscrire
               </a>
             </Button>
           </>
@@ -150,17 +150,17 @@ const Navbar = () => {
             <List >
               <ListItem>
                 <Button variant="ghost" w="100%">
-                  Home
+                  Acceuil
                 </Button>
               </ListItem>
               <ListItem>
                 <Button variant="ghost" w="100%">
-                  Products
+                  Produits
                 </Button>
               </ListItem>
               <ListItem>
                 <Button variant="ghost" w="100%">
-                  About
+                  A propos
                 </Button>
               </ListItem>
               <ListItem>
